@@ -1,0 +1,56 @@
+---
+"$schema": http://json-schema.org/draft-06/schema#
+"$ref": "#/definitions/Welcome1"
+definitions:
+  Welcome1:
+    type: object
+    properties:
+      subreddits:
+        type: array
+        items:
+          "$ref": "#/definitions/Subreddit"
+      bots:
+        type: array
+        items:
+          "$ref": "#/definitions/Bot"
+    required:
+    - bots
+    - subreddits
+    title: Welcome1
+  Bot:
+    type: object
+    properties:
+      name:
+        type: string
+      subreddits:
+        type: string
+      comments:
+        "$ref": "#/definitions/Comments"
+      submissions:
+        "$ref": "#/definitions/Comments"
+    required:
+    - name
+    - subreddits
+    title: Bot
+  Subreddit:
+    type: object
+    properties:
+      name:
+        type: string
+      add:
+        type: array
+        items:
+          type: string
+      inherit:
+        type: array
+        items:
+          type: string
+    required:
+    - add
+    - name
+    title: Subreddit
+  Comments:
+    anyOf:
+    - type: boolean
+    - type: string
+    title: Comments

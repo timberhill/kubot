@@ -1,0 +1,17 @@
+---
+subreddits:
+  - name: clean
+    add:  
+    - one
+    - two
+  - name: dirty
+    inherit:
+    - clean
+    add:
+    - dirt
+
+bots:
+  - name: example-bot
+    subreddits: dirty
+    comments: no
+    submissions: yes

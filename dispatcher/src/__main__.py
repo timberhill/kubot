@@ -1,4 +1,4 @@
 from .config import Config
 
-config = Config("config-example.yaml")
+config = Config.from_file("config-example.yaml")
 print(config.bots)

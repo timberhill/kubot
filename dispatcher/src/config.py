@@ -9,12 +9,21 @@ from .exceptions import KubotDispatcherConfigError
 
 class Config:
     """Read config file, validate and act as a convenient container."""
-    def __init__(self, path: str) -> None:
-        with open(path, "r") as config_file:
-            self._raw = yaml.load(config_file, Loader=yaml.BaseLoader)
-        
+    def __init__(self, raw: dict) -> None:
+        self._raw = raw    
         self._validate()
         self._gather_bot_data()
+    
+    @classmethod
+    def from_string(self, config_string: str):
+        raw = yaml.loads(config_string, Loader=yaml.BaseLoader)
+        return Config(raw)
+    
+    @classmethod
+    def from_file(self, config_path: str):
+        with open(config_path, "r") as config_file:
+           raw = yaml.load(config_file, Loader=yaml.BaseLoader)
+        return Config(raw)
     
     def _validate(self) -> None:
         schema_path = os.path.join(

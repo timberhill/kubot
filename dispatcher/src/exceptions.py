@@ -1,5 +1,6 @@
 """Kubot Dispatcher exceptions"""
 
+
 class KubotDispatcherError(Exception):
     """Generic Kubot Dispatcher exception
 

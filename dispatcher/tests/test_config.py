@@ -1,14 +1,18 @@
 """Test Config class functionality"""
 import pytest
 
-from src.config import Config
+from kubot_dispatcher.config import Config
 
 GOOD_CONFIG_PATH = "tests/config-examples/config_good_1.yaml"
 BAD_CONFIG_PATH = "tests/config-examples/config_bad_1.yaml"
 
 
 def validate_good_config(instance: Config) -> None:
+    """Validate the the config is correct according to the test file.
 
+    Args:
+        instance (Config): Config instance to be tested
+    """
     correct_subreddits = sorted(["dirt", "tidy", "neat"])
     correct_bot = "example-bot"
     assert (
@@ -22,7 +26,7 @@ def validate_good_config(instance: Config) -> None:
 
 def test_init() -> None:
     """Test importing Config class"""
-    from src import Config
+    from kubot_dispatcher import Config
 
     raw_config = {
         "subreddits": [
@@ -45,14 +49,14 @@ def test_init() -> None:
 
 def test_config_from_file() -> None:
     """Test the good config example is parsed correctly from file"""
-    from src import Config
+    from kubot_dispatcher import Config
     config = Config.from_file(GOOD_CONFIG_PATH)
     validate_good_config(config)
 
 
 def test_config_from_string() -> None:
     """Test the good config example is parsed correctly from string"""
-    from src import Config
+    from kubot_dispatcher import Config
 
     with open(GOOD_CONFIG_PATH, "r") as good_config_file:
         good_config_string = good_config_file.read()
@@ -64,8 +68,8 @@ def test_config_from_string() -> None:
 def test_config_cyclic_inheritance() -> None:
     """Test the bad example raises a correct exception for cyclic inheritance
     """
-    from src import Config
-    from src import KubotDispatcherError
+    from kubot_dispatcher import Config
+    from kubot_dispatcher import KubotDispatcherError
 
     with pytest.raises(KubotDispatcherError):
         Config.from_file(BAD_CONFIG_PATH)

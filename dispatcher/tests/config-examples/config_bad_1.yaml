@@ -1,6 +1,8 @@
 ---
 subreddits:
   - name: clean
+    inherit:
+    - dirty
     add:  
     - tidy
     - neat

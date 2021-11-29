@@ -1,0 +1,52 @@
+name: Continuous integration
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  tests:
+    name: ${{ matrix.os }} / ${{ matrix.python-version }} ${{ matrix.suffix }}
+    runs-on: ${{ matrix.image }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, ubuntu-20.04, ubuntu-latest]
+        python-version: ["3.9", "3.10"]
+      fail-fast: false
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Get full Python version
+        id: full-python-version
+        run: echo ::set-output name=version::$(python -c "import sys; print('-'.join(str(v) for v in sys.version_info))")
+
+      - name: Bootstrap poetry
+        run: |
+          curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          poetry config virtualenvs.in-project true
+
+      - name: Install dependencies
+        run: poetry install
+        working-directory: ./dispatcher
+
+      - name: Run pytest
+        run: make test
+        working-directory: ./dispatcher
+
+      - name: Build wheel
+        run: make build
+        working-directory: ./dispatcher

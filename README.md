@@ -1,1 +1,6 @@
-# k8s-reddit-bot
+# kubot
+
+Reddit bot fleet framework for kubernetes.
+---
+
+This is early RnD, please move along.

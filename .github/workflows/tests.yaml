@@ -28,11 +28,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Bootstrap poetry
-        run: curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
-
       - name: Install dependencies
-        run: poetry install
+        run: |
+          curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
+          poetry install
         working-directory: ./dispatcher
 
       - name: Build wheel

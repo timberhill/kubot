@@ -1,5 +1,5 @@
 ---
-name: tests
+name: test
 
 on:
   workflow_dispatch:
@@ -11,8 +11,8 @@ on:
       - '**'
 
 jobs:
-  tests:
-    name: ${{ matrix.os }} / ${{ matrix.python-version }} ${{ matrix.suffix }}
+  test:
+    name: ${{ matrix.os }} / python-${{ matrix.python-version }} ${{ matrix.suffix }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -34,6 +34,6 @@ jobs:
           poetry install
         working-directory: ./dispatcher
 
-      - name: Build wheel
-        run: make build
+      - name: Run pytest
+        run: make test
         working-directory: ./dispatcher

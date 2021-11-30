@@ -1,8 +1,8 @@
+![CI](https://github.com/timberhill/kubot/actions/workflows/ci.yaml/badge.svg)
+
 # kubot
 
 Reddit bot fleet framework for kubernetes.
-
-![CI](https://github.com/timberhill/kubot/actions/workflows/ci.yaml/badge.svg)
 
 ---
 

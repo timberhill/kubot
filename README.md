@@ -1,4 +1,4 @@
-![CI](https://github.com/timberhill/kubot/actions/workflows/ci.yaml/badge.svg)
+![CI](https://github.com/timberhill/kubot/actions/workflows/tests.yaml/badge.svg)
 
 # kubot
 

@@ -1,17 +1,20 @@
+import os
+
 from .config import Config
 from .dispatcher import Dispatcher
 from . import __version__
 
 
-config = Config.from_file("config-example.yaml")
-api_config = dict(
-    client_id="CLIENT_ID",
-    client_secret="CLIENT_SECRET",
-    password="PASSWORD",
-    user_agent=f"python:{__package__}:{__version__}",
-    username="USERNAME",
-)
+try:
+    config = Config.from_file("config-example.yaml")
 
-print(api_config)
+    api_config = dict(
+        client_id=os.environ.get("REDDIT_CLIENT_ID"),
+        client_secret=os.environ.get("REDDIT_CLIENT_SECRET"),
+        user_agent=f"python:{__package__}:{__version__} (by /u/timberhilly)",
+        redirect_uri="http://localhost:8080"
+    )
 
-dispatcher = Dispatcher(config, api_config)
+    Dispatcher(config, api_config).start()
+except Exception as e:
+    print(f"Critical error in __main__.py: {e}")

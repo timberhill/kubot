@@ -7,13 +7,18 @@
 
 This is early RnD, please move along.
 
+## Kubot dispatcher
+
+### Client credentials
+
+Get at https://www.reddit.com/prefs/apps
+
 ## To do
 
 ### Stage 1 - local single-threaded app with a comment trigger
 
 - `core-1`: Dispatcher class reading comments from PRAW in a single thread
 - `maint-1`: github action that adds a version tag on PR merge
-- `core-`: Main entry for the code
 - `core-`: Logging setup
 - `core-`: Create an example bot
 - `core-`: Dispatcher sending comments over tcp to an example bot that just logs out the comment if a word is found

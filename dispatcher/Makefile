@@ -9,6 +9,10 @@ test: ## Run all tests
 build: ## Run all tests
 	@poetry build
 
+.PHONY: run
+run: ## Start the code execution
+	@poetry run python -m kubot_dispatcher
+
 
 .PHONY: help
 help: ## Display this help

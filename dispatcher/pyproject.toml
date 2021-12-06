@@ -9,7 +9,7 @@ license = "GPL"
 python = "^3.9"
 PyYAML = "^6.0"
 jsonschema = "^4.2.1"
-praw = "^7.5.0"
+asyncpraw = "^7.5.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"

@@ -2,16 +2,14 @@ from .config import Config
 from .dispatcher import Dispatcher
 from .exceptions import (
     KubotDispatcherConfigError,
-    KubotDispatcherError,
-    KubotDispatcherRedditError
+    KubotDispatcherError
 )
 
 __all__ = [
     "Config",
     "Dispatcher",
     "KubotDispatcherError",
-    "KubotDispatcherConfigError",
-    "KubotDispatcherRedditError"
+    "KubotDispatcherConfigError"
 ]
 
 # get package version

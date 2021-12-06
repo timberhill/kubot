@@ -6,7 +6,7 @@ test: ## Run all tests
 	@poetry run python -m pytest tests --flake8
 
 .PHONY: build
-build: ## Run all tests
+build: ## Build a wheel
 	@poetry build
 
 .PHONY: run

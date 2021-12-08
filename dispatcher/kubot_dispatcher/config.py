@@ -26,6 +26,32 @@ class Config:
             raw = yaml.load(config_file, Loader=yaml.BaseLoader)
         return Config(raw)
 
+    @property
+    def comment_subreddits(self) -> list:
+        """List of subreddits to fetch comments from.
+
+        Returns:
+            list: subreddits
+        """
+        return list(set(
+            subreddit
+            for botconfig in self.bots.values() if botconfig.comments
+            for subreddit in botconfig.subreddits)
+        )
+
+    @property
+    def submission_subreddits(self) -> list:
+        """List of subreddits to fetch submissions from.
+
+        Returns:
+            list: subreddits
+        """
+        return list(set(
+            subreddit
+            for botconfig in self.bots.values() if botconfig.submissions
+            for subreddit in botconfig.subreddits)
+        )
+
     def _validate(self) -> None:
         schema_path = os.path.join(
             os.path.abspath(os.path.dirname(__file__)), "config-schema.yaml"
@@ -65,8 +91,7 @@ class Config:
                 )
 
             # make sure that the recursion is not cyclic
-            if list_name in history \
-                    or list_name in subreddit_data.get("inherit", []):
+            if list_name in history or list_name in subreddit_data.get("inherit", []):
                 raise KubotDispatcherConfigError(
                     "Encountered cyclic inheritance in the subreddit lists"
                 )
@@ -95,10 +120,8 @@ class Config:
             self.bots[bot.get("name")] = BotConfig(
                 name=bot.get("name"),
                 subreddits=subreddit_list,
-                comments=True if bot.get("comments", "yes") == "yes"
-                else False,
-                submissions=True if bot.get("submissions", "yes") == "yes"
-                else False,
+                comments=True if bot.get("comments", "yes") == "yes" else False,
+                submissions=True if bot.get("submissions", "yes") == "yes" else False,
             )
 
 

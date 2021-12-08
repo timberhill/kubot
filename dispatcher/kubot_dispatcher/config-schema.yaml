@@ -46,7 +46,6 @@ definitions:
         items:
           type: string
     required:
-    - add
     - name
     title: Subreddit
   Comments:

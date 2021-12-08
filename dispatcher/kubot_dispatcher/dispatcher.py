@@ -15,8 +15,7 @@ class Dispatcher:
     def start(self) -> None:
         """Starts streaming reddit activity and sending it to the bots.
         """
-        # loop = asyncio.get_event_loop()
-        # loop.run_until_complete(self._stream_submissions())
+        print(self.config.comment_subreddits)
 
         loop = asyncio.get_event_loop()
         loop.create_task(self._stream_comments())
@@ -26,15 +25,21 @@ class Dispatcher:
     async def _stream_submissions(self) -> None:
         """Stream submissions asynchronously. Calls self._process_submission()
         """
-        subreddit = await self.reddit.subreddit("all")
+        subreddit = await self.reddit.subreddit(
+            "+".join(self.config.submission_subreddits))
         async for submission in subreddit.stream.submissions(pause_after=-1):
+            if submission is None:
+                continue
             await self._process_submission(submission)
 
     async def _stream_comments(self) -> None:
         """Stream comments asynchronously. Calls self._process_submission()
         """
-        subreddit = await self.reddit.subreddit("all")
+        subreddit = await self.reddit.subreddit(
+            "+".join(self.config.comment_subreddits))
         async for comment in subreddit.stream.comments(pause_after=-1):
+            if comment is None:
+                continue
             await self._process_comment(comment)
 
     async def _process_submission(self, submission) -> None:

@@ -1,7 +1,7 @@
 ---
 subreddits:
   - name: clean
-    add:  
+    add:
     - tidy
     - neat
   - name: dirty
@@ -11,7 +11,17 @@ subreddits:
     - dirt
 
 bots:
-  - name: example-bot
+  - name: example-bot-1
     subreddits: dirty
     comments: no
+    submissions: yes
+
+  - name: example-bot-2
+    subreddits: dirty
+    comments: yes
+    submissions: no
+
+  - name: example-bot-3
+    subreddits: dirty
+    comments: yes
     submissions: yes

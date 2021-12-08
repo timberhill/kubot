@@ -6,6 +6,9 @@ from kubot_dispatcher.config import Config
 GOOD_CONFIG_PATH = "tests/config-examples/config_good_1.yaml"
 BAD_CONFIG_PATH = "tests/config-examples/config_bad_1.yaml"
 
+example_bot = "example-bot-1"
+example_bot_subreddits = sorted(["dirt", "tidy", "neat"])
+
 
 def validate_good_config(instance: Config) -> None:
     """Validate the the config is correct according to the test file.
@@ -13,15 +16,11 @@ def validate_good_config(instance: Config) -> None:
     Args:
         instance (Config): Config instance to be tested
     """
-    correct_subreddits = sorted(["dirt", "tidy", "neat"])
-    correct_bot = "example-bot"
-    assert (
-        instance.bots.get(correct_bot, None) is not None
-        and sorted(instance.bots.get(correct_bot).subreddits)
-        == correct_subreddits
-        and len(set(instance.bots.get(correct_bot).subreddits))
-        == len(correct_subreddits)
-    )
+    assert instance.bots.get(example_bot, None) is not None
+    assert sorted(set(instance.bots.get(example_bot).subreddits)) \
+        == example_bot_subreddits
+    assert len(set(instance.bots.get(example_bot).subreddits)) \
+        == len(example_bot_subreddits)
 
 
 def test_init() -> None:
@@ -35,7 +34,7 @@ def test_init() -> None:
         ],
         "bots": [
             {
-                "name": "example-bot",
+                "name": "example-bot-1",
                 "subreddits": "dirty",
                 "comments": "no",
                 "submissions": "yes",
@@ -73,3 +72,21 @@ def test_config_cyclic_inheritance() -> None:
 
     with pytest.raises(KubotDispatcherError):
         Config.from_file(BAD_CONFIG_PATH)
+
+
+def test_config_comment_subreddits() -> None:
+    """Test comment_subreddits property
+    """
+    from kubot_dispatcher import Config
+    config = Config.from_file(GOOD_CONFIG_PATH)
+    assert isinstance(config.comment_subreddits, list) \
+        and len(config.comment_subreddits) == len(example_bot_subreddits)
+
+
+def test_config_submision_subreddits() -> None:
+    """Test submision_subreddits property
+    """
+    from kubot_dispatcher import Config
+    config = Config.from_file(GOOD_CONFIG_PATH)
+    assert isinstance(config.submission_subreddits, list) \
+        and len(config.submission_subreddits) == len(example_bot_subreddits)

@@ -29,27 +29,35 @@ class Config:
     @property
     def comment_subreddits(self) -> list:
         """List of subreddits to fetch comments from.
+        All bots/lists are combined here.
 
         Returns:
             list: subreddits
         """
-        return list(set(
-            subreddit
-            for botconfig in self.bots.values() if botconfig.comments
-            for subreddit in botconfig.subreddits)
+        return list(
+            set(
+                subreddit
+                for botconfig in self.bots.values()
+                if botconfig.comments
+                for subreddit in botconfig.subreddits
+            )
         )
 
     @property
     def submission_subreddits(self) -> list:
         """List of subreddits to fetch submissions from.
+        All bots/lists are combined here.
 
         Returns:
             list: subreddits
         """
-        return list(set(
-            subreddit
-            for botconfig in self.bots.values() if botconfig.submissions
-            for subreddit in botconfig.subreddits)
+        return list(
+            set(
+                subreddit
+                for botconfig in self.bots.values()
+                if botconfig.submissions
+                for subreddit in botconfig.subreddits
+            )
         )
 
     def _validate(self) -> None:
@@ -91,7 +99,8 @@ class Config:
                 )
 
             # make sure that the recursion is not cyclic
-            if list_name in history or list_name in subreddit_data.get("inherit", []):
+            if list_name in history \
+                    or list_name in subreddit_data.get("inherit", []):
                 raise KubotDispatcherConfigError(
                     "Encountered cyclic inheritance in the subreddit lists"
                 )

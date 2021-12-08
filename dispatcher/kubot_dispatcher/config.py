@@ -26,6 +26,40 @@ class Config:
             raw = yaml.load(config_file, Loader=yaml.BaseLoader)
         return Config(raw)
 
+    @property
+    def comment_subreddits(self) -> list:
+        """List of subreddits to fetch comments from.
+        All bots/lists are combined here.
+
+        Returns:
+            list: subreddits
+        """
+        return list(
+            set(
+                subreddit
+                for botconfig in self.bots.values()
+                if botconfig.comments
+                for subreddit in botconfig.subreddits
+            )
+        )
+
+    @property
+    def submission_subreddits(self) -> list:
+        """List of subreddits to fetch submissions from.
+        All bots/lists are combined here.
+
+        Returns:
+            list: subreddits
+        """
+        return list(
+            set(
+                subreddit
+                for botconfig in self.bots.values()
+                if botconfig.submissions
+                for subreddit in botconfig.subreddits
+            )
+        )
+
     def _validate(self) -> None:
         schema_path = os.path.join(
             os.path.abspath(os.path.dirname(__file__)), "config-schema.yaml"
@@ -95,10 +129,8 @@ class Config:
             self.bots[bot.get("name")] = BotConfig(
                 name=bot.get("name"),
                 subreddits=subreddit_list,
-                comments=True if bot.get("comments", "yes") == "yes"
-                else False,
-                submissions=True if bot.get("submissions", "yes") == "yes"
-                else False,
+                comments=True if bot.get("comments", "yes") == "yes" else False,
+                submissions=True if bot.get("submissions", "yes") == "yes" else False,
             )
 
 

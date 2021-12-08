@@ -1,17 +1,22 @@
 ---
 subreddits:
-  - name: clean
-    add:  
-    - tidy
-    - neat
-  - name: dirty
+  - name: example-list
     inherit:
-    - clean
+    - gaming
+    - memes
+  - name: gaming
     add:
-    - dirt
+    - gaming
+    - skyrim
+    - raft
+  - name: memes
+    add:
+    - memes
+    - meme
+    - dankmemes
 
 bots:
   - name: example-bot
-    subreddits: dirty
-    comments: no
+    subreddits: example-list
+    comments: yes
     submissions: yes

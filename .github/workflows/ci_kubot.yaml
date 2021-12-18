@@ -1,5 +1,5 @@
 ---
-name: build
+name: ci_kubot
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ on:
       - '**'
 
 jobs:
-  build:
+  test:
     name: ${{ matrix.os }} / python-${{ matrix.python-version }} ${{ matrix.suffix }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -31,9 +31,10 @@ jobs:
       - name: Install dependencies
         run: |
           curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
-          poetry install
-        working-directory: ./dispatcher
+          cd package && poetry install
+
+      - name: Run pytest
+        run: make test
 
       - name: Build wheel
         run: make build
-        working-directory: ./dispatcher

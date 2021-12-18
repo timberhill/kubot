@@ -1,7 +1,5 @@
 # kubot
-[![test](https://github.com/timberhill/kubot/actions/workflows/test.yaml/badge.svg)](https://github.com/timberhill/kubot/actions/workflows/test.yaml)
-[![build](https://github.com/timberhill/kubot/actions/workflows/build.yaml/badge.svg)](https://github.com/timberhill/kubot/actions/workflows/build.yaml)
-
+[![CI](https://github.com/timberhill/kubot/actions/workflows/ci_kubot.yaml/badge.svg)](https://github.com/timberhill/kubot/actions/workflows/ci_kubot.yaml)
 *Reddit bot fleet framework for kubernetes.*
 
 

@@ -4,12 +4,16 @@ import json
 import socket
 from datetime import datetime
 
+from asyncpraw.models.reddit.submission import Submission
+from asyncpraw.models.reddit.comment import Comment
+
 
 class Dispatcher:
     """
     Dispatcher class that streams data from Reddit API and
     sends it to the consumer bots.
     """
+
     def __init__(self, config, api_config) -> None:
         self.config = config
         self.reddit = asyncpraw.Reddit(**api_config)
@@ -25,7 +29,7 @@ class Dispatcher:
         loop.run_forever()
 
     async def _stream_submissions(self) -> None:
-        """Stream submissions asynchronously. Calls self._process_submission()
+        """Stream submissions asynchronously. Calls self._dispatch_submission()
         """
         subreddit = await self.reddit.subreddit(
             "+".join(self.config.submission_subreddits))
@@ -35,7 +39,7 @@ class Dispatcher:
             await self._dispatch_submission(submission)
 
     async def _stream_comments(self) -> None:
-        """Stream comments asynchronously. Calls self._process_submission()
+        """Stream comments asynchronously. Calls self._dispatch_comment()
         """
         subreddit = await self.reddit.subreddit(
             "+".join(self.config.comment_subreddits))
@@ -44,7 +48,7 @@ class Dispatcher:
                 continue
             await self._dispatch_comment(comment)
 
-    async def _dispatch_submission(self, submission) -> None:
+    async def _dispatch_submission(self, submission: Submission) -> None:
         """Dispatch a submission.
 
         Args:
@@ -66,7 +70,7 @@ class Dispatcher:
             sock.sendall(bytes(json.dumps(serialised_dict) + "\n", "utf-8"))
             print(f"{submission.title} status={str(sock.recv(10), 'utf-8')}")
 
-    async def _dispatch_comment(self, comment) -> None:
+    async def _dispatch_comment(self, comment: Comment) -> None:
         """Dispatch a comment.
 
         Args:

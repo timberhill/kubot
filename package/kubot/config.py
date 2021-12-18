@@ -126,11 +126,16 @@ class Config:
                 self._raw.get("subreddits"), bot.get("subreddits"), []
             )
 
+            include_submissions = \
+                True if bot.get("submissions", "yes") == "yes" else False
+            include_comments = \
+                True if bot.get("comments", "yes") == "yes" else False
+
             self.bots[bot.get("name")] = BotConfig(
                 name=bot.get("name"),
                 subreddits=subreddit_list,
-                comments=True if bot.get("comments", "yes") == "yes" else False,
-                submissions=True if bot.get("submissions", "yes") == "yes" else False,
+                submissions=include_submissions,
+                comments=include_comments,
             )
 
 

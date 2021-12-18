@@ -2,7 +2,7 @@
 
 .PHONY: test-kubot
 test-kubot: ## Run kubot package tests
-	@cd package && poetry run python -m pytest tests --flake8
+	@cd package && poetry run pytest tests --flake8
 
 .PHONY: build-kubot
 build-kubot: ## Build kubot package

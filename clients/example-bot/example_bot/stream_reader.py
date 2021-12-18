@@ -16,9 +16,10 @@ class StreamReader(socketserver.BaseRequestHandler):
         self.process(data)
 
     def process(self, data):
-        """Process data
+        """Process data.
+        This function should be overriden.
 
         Args:
             data (dict): incoming json object
         """
-        raise NotImplementedError("This function should be overriden.")
+        raise NotImplementedError("Override this function in the child class.")

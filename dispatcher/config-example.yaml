@@ -1,22 +1,11 @@
 ---
 subreddits:
-  - name: example-list
-    inherit:
-    - gaming
-    - memes
-  - name: gaming
+  - name: all
     add:
-    - gaming
-    - skyrim
-    - raft
-  - name: memes
-    add:
-    - memes
-    - meme
-    - dankmemes
+    - all
 
 bots:
   - name: example-bot
-    subreddits: example-list
+    subreddits: all
     comments: yes
     submissions: yes

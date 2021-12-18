@@ -1,5 +1,8 @@
 import asyncpraw
 import asyncio
+import json
+import socket
+from datetime import datetime
 
 
 class Dispatcher:
@@ -10,7 +13,6 @@ class Dispatcher:
     def __init__(self, config, api_config) -> None:
         self.config = config
         self.reddit = asyncpraw.Reddit(**api_config)
-        self.counter = 0
 
     def start(self) -> None:
         """Starts streaming reddit activity and sending it to the bots.
@@ -30,7 +32,7 @@ class Dispatcher:
         async for submission in subreddit.stream.submissions(pause_after=-1):
             if submission is None:
                 continue
-            await self._process_submission(submission)
+            await self._dispatch_submission(submission)
 
     async def _stream_comments(self) -> None:
         """Stream comments asynchronously. Calls self._process_submission()
@@ -40,24 +42,35 @@ class Dispatcher:
         async for comment in subreddit.stream.comments(pause_after=-1):
             if comment is None:
                 continue
-            await self._process_comment(comment)
+            await self._dispatch_comment(comment)
 
-    async def _process_submission(self, submission) -> None:
-        """Process a submission.
+    async def _dispatch_submission(self, submission) -> None:
+        """Dispatch a submission.
 
         Args:
             submission (asyncpraw.models.reddit.submission.Submission):
                 submission object to process
         """
-        self.counter += 1
-        print("submission", self.counter, submission)
+        dispatch_time = datetime.utcnow().timestamp()
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            serialised_dict = submission.__dict__
+            serialised_dict.pop("_reddit")
+            serialised_dict.pop("comments")
+            serialised_dict["subreddit"] = \
+                serialised_dict["subreddit"].display_name
+            serialised_dict["author"] = \
+                serialised_dict["author"].name
 
-    async def _process_comment(self, comment) -> None:
-        """Process a comment.
+            sock.connect(("localhost", 9999))
+            serialised_dict["dispatch_time"] = dispatch_time
+            sock.sendall(bytes(json.dumps(serialised_dict) + "\n", "utf-8"))
+            print(f"{submission.title} status={str(sock.recv(10), 'utf-8')}")
+
+    async def _dispatch_comment(self, comment) -> None:
+        """Dispatch a comment.
 
         Args:
             comment (asyncpraw.models.reddit.comment.Comment):
                 comment object to process
         """
-        self.counter += 1
-        print("comment", self.counter, comment)
+        pass

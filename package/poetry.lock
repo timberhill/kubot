@@ -225,23 +225,6 @@ format = ["fqdn", "idna", "isoduration", "jsonpointer (>1.13)", "rfc3339-validat
 format_nongpl = ["fqdn", "idna", "isoduration", "jsonpointer (>1.13)", "rfc3339-validator", "rfc3986-validator (>0.1.0)", "uri-template", "webcolors (>=1.11)"]
 
 [[package]]
-name = "kubot"
-version = "0.1.3"
-description = ""
-category = "main"
-optional = false
-python-versions = ">=3.9,<4.0"
-
-[package.dependencies]
-asyncpraw = ">=7.5.0,<8.0.0"
-jsonschema = ">=4.2.1,<5.0.0"
-PyYAML = ">=6.0,<7.0"
-
-[package.source]
-type = "file"
-url = "../package/dist/kubot-0.1.3-py3-none-any.whl"
-
-[[package]]
 name = "mccabe"
 version = "0.6.1"
 description = "McCabe checker, plugin for flake8"
@@ -442,7 +425,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "5514a0544afbb71bdd8f937f00c5321854a27cd22c488374b969202be63920cb"
+content-hash = "b1fb97965313342b1d5314ea3189e4d2667d453b9762e71afd80a6e8cd575ea2"
 
 [metadata.files]
 aiofiles = [
@@ -660,9 +643,6 @@ iniconfig = [
 jsonschema = [
     {file = "jsonschema-4.3.1-py3-none-any.whl", hash = "sha256:91ffbad994d766041c6003d5f8f475cceb890c30084bd0e64847ccb1c10e48bb"},
     {file = "jsonschema-4.3.1.tar.gz", hash = "sha256:0070ca8dd5bf47941d1e9d8bc115a3654b1138cfb8aff44f3e3527276107314f"},
-]
-kubot = [
-    {file = "kubot-0.1.3-py3-none-any.whl", hash = "sha256:592e68f544d2cd35720f7b5dc9d5d50b51f0f77c45ee66cc954eee2254cd4c90"},
 ]
 mccabe = [
     {file = "mccabe-0.6.1-py2.py3-none-any.whl", hash = "sha256:ab8a6258860da4b6677da4bd2fe5dc2c659cff31b3ee4f7f5d64e79735b80d42"},

@@ -23,11 +23,10 @@ jobs:
         shell: bash
     steps:
       - uses: actions/checkout@v2
-        with:
-          python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
         run: |
+          sudo apt-get install python${{ matrix.python-version }}
           curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
           cd package && poetry install
 

@@ -27,7 +27,7 @@ jobs:
       - name: Install python
         run: |
           sudo apt-get -qq update
-          sudo apt-get -qq --yes --force-yes install python${{ matrix.python-version }}-venv
+          sudo apt-get -qq --yes --assume-yes install python${{ matrix.python-version }}-venv
 
       - name: which python
         run: |

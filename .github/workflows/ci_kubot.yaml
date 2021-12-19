@@ -24,9 +24,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install dependencies
+      - name: Install python
         run: |
           sudo apt-get install python${{ matrix.python-version }}
+
+      - name: which python
+        run: which python
+
+      - name: Install poetry
+        run: |
           curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
           cd package && poetry install
 

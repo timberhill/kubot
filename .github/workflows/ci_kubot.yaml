@@ -28,7 +28,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt install python3
           curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
           cd package && poetry install
 

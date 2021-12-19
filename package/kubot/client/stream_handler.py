@@ -2,9 +2,11 @@ import socketserver
 import json
 
 
-class StreamReader(socketserver.BaseRequestHandler):
+class StreamHandler(socketserver.BaseRequestHandler):
     """Comment stream reader
     """
+    port = None
+
     def handle(self):
         """Transform incoming data into json and call process()
         """

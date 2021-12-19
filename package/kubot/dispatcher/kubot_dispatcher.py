@@ -7,14 +7,16 @@ from datetime import datetime
 from asyncpraw.models.reddit.submission import Submission
 from asyncpraw.models.reddit.comment import Comment
 
+from .kubot_dispatcher_config import KubotDispatcherConfig
 
-class Dispatcher:
+
+class KubotDispatcher:
     """
     Dispatcher class that streams data from Reddit API and
     sends it to the consumer bots.
     """
 
-    def __init__(self, config, api_config) -> None:
+    def __init__(self, config: KubotDispatcherConfig, api_config: dict):
         self.config = config
         self.reddit = asyncpraw.Reddit(**api_config)
 
@@ -65,10 +67,10 @@ class Dispatcher:
             serialised_dict["author"] = \
                 serialised_dict["author"].name
 
-            sock.connect(("localhost", 9999))
+            sock.connect(("localhost", 37998))
             serialised_dict["dispatch_time"] = dispatch_time
             sock.sendall(bytes(json.dumps(serialised_dict) + "\n", "utf-8"))
-            print(f"{submission.title} status={str(sock.recv(10), 'utf-8')}")
+            print(f"SENT SUBMISSION, status={str(sock.recv(10), 'utf-8')}")
 
     async def _dispatch_comment(self, comment: Comment) -> None:
         """Dispatch a comment.
@@ -77,4 +79,16 @@ class Dispatcher:
             comment (asyncpraw.models.reddit.comment.Comment):
                 comment object to process
         """
-        pass
+        dispatch_time = datetime.utcnow().timestamp()
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            serialised_dict = comment.__dict__
+            serialised_dict.pop("_reddit")
+            serialised_dict["subreddit"] = \
+                serialised_dict["subreddit"].display_name
+            serialised_dict["author"] = \
+                serialised_dict["author"].name
+
+            sock.connect(("localhost", 37999))
+            serialised_dict["dispatch_time"] = dispatch_time
+            sock.sendall(bytes(json.dumps(serialised_dict) + "\n", "utf-8"))
+            print(f"SENT COMMENT, status={str(sock.recv(10), 'utf-8')}")

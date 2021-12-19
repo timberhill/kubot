@@ -1,11 +1,11 @@
 import os
-import kubot
+from kubot.dispatcher import KubotDispatcherConfig, KubotDispatcher
 
 __version__ = "0.1.1"
 
 
 try:
-    config = kubot.Config.from_file("config-example.yaml")
+    config = KubotDispatcherConfig.from_file("config-example.yaml")
 
     api_config = dict(
         client_id=os.environ.get("REDDIT_CLIENT_ID"),
@@ -14,6 +14,6 @@ try:
         redirect_uri="http://localhost:8080"
     )
 
-    kubot.Dispatcher(config, api_config).start()
+    KubotDispatcher(config, api_config).start()
 except Exception as e:
     print(f"Critical error in __main__.py: {e}")

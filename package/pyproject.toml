@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kubot"
-version = "0.1.3"
+version = "0.1.4"
 description = ""
 authors = ["Maksym Lisogorskyi <m.lisogorskyi@gmail.com>"]
 license = "GPL"

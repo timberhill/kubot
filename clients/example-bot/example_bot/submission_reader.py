@@ -1,16 +1,8 @@
-from .stream_reader import StreamReader
-from datetime import datetime
+from kubot.client import StreamHandler
 
 
-class SubmissionReader(StreamReader):
-    """Submission stream reader
-    """
+class SubmissionHandler(StreamHandler):
+    port = 37998
+
     def process(self, data):
-        """Process data
-
-        Args:
-            data (dict): incoming json object
-        """
-        receive_time = datetime.utcnow()
-        delay = receive_time - datetime.fromtimestamp(data["dispatch_time"])
-        print(data["title"], delay.total_seconds() * 1000, "ms")
+        print(data)

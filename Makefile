@@ -1,5 +1,8 @@
 .DEFAULT_GOAL := help
 
+PACKAGE_VERSION := $(shell grep "version" package/pyproject.toml | grep -o "[0-9.]*")
+
+
 .PHONY: test-kubot
 test-kubot: ## Run kubot package tests
 	@cd package && poetry run pytest tests --flake8
@@ -19,8 +22,11 @@ build: build-kubot ## Build all
 .PHONY: rebuild
 rebuild: build-kubot ## rebuild kubot and reinstall it for the dispatcher
 	@cd dispatcher \
-	&& poetry remove kubot \
-	&& poetry add ../package/dist/kubot-$(shell grep "version" package/pyproject.toml | grep -o '[0-9.]*')-py3-none-any.whl
+		&& poetry remove kubot \
+		&& poetry add ../package/dist/kubot-${PACKAGE_VERSION}-py3-none-any.whl
+	@cd clients/example-bot \
+		&& poetry remove kubot \
+		&& poetry add ../../package/dist/kubot-${PACKAGE_VERSION}-py3-none-any.whl
 
 
 .PHONY: help

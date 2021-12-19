@@ -1,13 +1,9 @@
-from .config import Config
-from .dispatcher import Dispatcher
 from .exceptions import (
     KubotDispatcherConfigError,
     KubotDispatcherError
 )
 
 __all__ = [
-    "Config",
-    "Dispatcher",
     "KubotDispatcherError",
     "KubotDispatcherConfigError"
 ]

@@ -1,6 +1,7 @@
-import socketserver
-from .submission_reader import SubmissionReader
+from kubot.client import KubotClient
 
-socketserver.TCPServer.allow_reuse_address = True
-server = socketserver.TCPServer(("localhost", 9999), SubmissionReader)
-server.serve_forever()
+from .comment_reader import CommentHandler
+from .submission_reader import SubmissionHandler
+
+client = KubotClient(SubmissionHandler, CommentHandler)
+client.start()

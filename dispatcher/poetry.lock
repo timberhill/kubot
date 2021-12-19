@@ -226,11 +226,11 @@ format_nongpl = ["fqdn", "idna", "isoduration", "jsonpointer (>1.13)", "rfc3339-
 
 [[package]]
 name = "kubot"
-version = "0.1.3"
+version = "0.1.4"
 description = ""
 category = "main"
 optional = false
-python-versions = ">=3.9,<4.0"
+python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
 asyncpraw = ">=7.5.0,<8.0.0"
@@ -239,7 +239,7 @@ PyYAML = ">=6.0,<7.0"
 
 [package.source]
 type = "file"
-url = "../package/dist/kubot-0.1.3-py3-none-any.whl"
+url = "../package/dist/kubot-0.1.4-py3-none-any.whl"
 
 [[package]]
 name = "mccabe"
@@ -442,7 +442,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "5514a0544afbb71bdd8f937f00c5321854a27cd22c488374b969202be63920cb"
+content-hash = "fa298c52f927073f620e970f9ce168defd51cec1f7d163345b418b09201d784c"
 
 [metadata.files]
 aiofiles = [
@@ -662,7 +662,7 @@ jsonschema = [
     {file = "jsonschema-4.3.1.tar.gz", hash = "sha256:0070ca8dd5bf47941d1e9d8bc115a3654b1138cfb8aff44f3e3527276107314f"},
 ]
 kubot = [
-    {file = "kubot-0.1.3-py3-none-any.whl", hash = "sha256:592e68f544d2cd35720f7b5dc9d5d50b51f0f77c45ee66cc954eee2254cd4c90"},
+    {file = "kubot-0.1.4-py3-none-any.whl", hash = "sha256:5e6eea8b9cb1912adb0844a131c4fcf8940acd6b6932f3fbd8e455a21cc58249"},
 ]
 mccabe = [
     {file = "mccabe-0.6.1-py2.py3-none-any.whl", hash = "sha256:ab8a6258860da4b6677da4bd2fe5dc2c659cff31b3ee4f7f5d64e79735b80d42"},

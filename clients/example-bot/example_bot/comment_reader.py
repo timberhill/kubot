@@ -1,8 +1,8 @@
-from .stream_reader import StreamReader
+from kubot.client import StreamHandler
 
 
-class CommentReader(StreamReader):
-    """Comment stream reader
-    """
-    def __init__(self, port) -> None:
-        pass
+class CommentHandler(StreamHandler):
+    port = 37999
+
+    def process(self, data):
+        print(data)

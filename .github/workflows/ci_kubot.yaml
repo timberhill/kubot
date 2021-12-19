@@ -29,7 +29,7 @@ jobs:
           sudo apt-get -qq update
           sudo apt-get -qq --yes --assume-yes install python${{ matrix.python-version }}-venv
 
-      - name: which python
+      - name: Python version
         run: |
           which python
           python --version
@@ -38,6 +38,11 @@ jobs:
         run: |
           curl -sL https://install.python-poetry.org | python${{ matrix.python-version }} - -y ${{ matrix.bootstrap-args }}
           cd package && poetry install
+
+      - name: Poetry version
+        run: |
+          which poetry
+          poetry --version
 
       - name: Run pytest
         run: make test

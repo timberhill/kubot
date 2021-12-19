@@ -26,10 +26,12 @@ jobs:
 
       - name: Install python
         run: |
-          sudo apt-get install python${{ matrix.python-version }}
+          sudo apt-get install python${{ matrix.python-version }}-venv
 
       - name: which python
-        run: which python
+        run: |
+          which python
+          python --version
 
       - name: Install poetry
         run: |

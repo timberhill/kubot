@@ -36,7 +36,7 @@ jobs:
 
       - name: Install poetry
         run: |
-          curl -sL https://install.python-poetry.org | python - -y ${{ matrix.bootstrap-args }}
+          curl -sL https://install.python-poetry.org | python${{ matrix.python-version }} - -y ${{ matrix.bootstrap-args }}
           cd package && poetry install
 
       - name: Run pytest

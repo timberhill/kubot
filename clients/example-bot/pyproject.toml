@@ -1,18 +1,16 @@
 [tool.poetry]
-name = "kubot-dispatcher"
-version = "0.1.1"
+name = "example-bot"
+version = "0.1.0"
 description = ""
 authors = ["Maksym Lisogorskyi <m.lisogorskyi@gmail.com>"]
-license = "GPL"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-kubot = {path = "../package/dist/kubot-0.1.5-py3-none-any.whl"}
+kubot = {path = "../../package/dist/kubot-0.1.5-py3-none-any.whl"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
-pytest-flake8 = "^1.0.7"
-flake8 = "^3.9.2"
+flake8 = "^4.0.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -4,10 +4,10 @@ import yaml
 from dataclasses import dataclass
 from typing import Tuple
 
-from .exceptions import KubotDispatcherConfigError
+from ..exceptions import KubotDispatcherConfigError
 
 
-class Config:
+class KubotDispatcherConfig:
     """Read config file, validate and act as a convenient container."""
 
     def __init__(self, raw: dict) -> None:
@@ -18,13 +18,13 @@ class Config:
     @classmethod
     def from_string(self, config_string: str):
         raw = yaml.load(config_string, Loader=yaml.BaseLoader)
-        return Config(raw)
+        return KubotDispatcherConfig(raw)
 
     @classmethod
     def from_file(self, config_path: str):
         with open(config_path, "r") as config_file:
             raw = yaml.load(config_file, Loader=yaml.BaseLoader)
-        return Config(raw)
+        return KubotDispatcherConfig(raw)
 
     @property
     def comment_subreddits(self) -> list:
@@ -126,11 +126,16 @@ class Config:
                 self._raw.get("subreddits"), bot.get("subreddits"), []
             )
 
+            include_submissions = \
+                True if bot.get("submissions", "yes") == "yes" else False
+            include_comments = \
+                True if bot.get("comments", "yes") == "yes" else False
+
             self.bots[bot.get("name")] = BotConfig(
                 name=bot.get("name"),
                 subreddits=subreddit_list,
-                comments=True if bot.get("comments", "yes") == "yes" else False,
-                submissions=True if bot.get("submissions", "yes") == "yes" else False,
+                submissions=include_submissions,
+                comments=include_comments,
             )
 
 

@@ -1,0 +1,54 @@
+---
+name: ci_kubot
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  test:
+    name: python-${{ matrix.python-version }} ${{ matrix.suffix }}
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9"]
+      fail-fast: false
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install python
+        run: |
+          sudo apt-get -qq update
+          sudo apt-get -qq --yes --assume-yes install python${{ matrix.python-version }}-venv
+
+      - name: Python version
+        run: |
+          which python
+          python --version
+
+      - name: Install poetry
+        run: |
+          curl -sL https://install.python-poetry.org | python${{ matrix.python-version }} - -y ${{ matrix.bootstrap-args }}
+
+      - name: Poetry version
+        run: |
+          which poetry
+          poetry --version
+
+      - name: Install dependencies
+        run: |
+          cd package && poetry install
+
+      - name: Run pytest
+        run: make test
+
+      - name: Build wheel
+        run: make build

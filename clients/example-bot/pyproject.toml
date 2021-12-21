@@ -6,7 +6,7 @@ authors = ["Maksym Lisogorskyi <m.lisogorskyi@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-kubot = {path = "../../package/dist/kubot-0.1.4-py3-none-any.whl"}
+kubot = {path = "../../package/dist/kubot-0.1.5-py3-none-any.whl"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"

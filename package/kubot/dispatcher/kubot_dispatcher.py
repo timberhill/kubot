@@ -8,6 +8,7 @@ from asyncpraw.models.reddit.submission import Submission
 from asyncpraw.models.reddit.comment import Comment
 
 from .kubot_dispatcher_config import KubotDispatcherConfig
+from .model_serialiser import ModelSerialiser
 
 
 class KubotDispatcher:
@@ -59,17 +60,11 @@ class KubotDispatcher:
         """
         dispatch_time = datetime.utcnow().timestamp()
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-            serialised_dict = submission.__dict__
-            serialised_dict.pop("_reddit")
-            serialised_dict.pop("comments")
-            serialised_dict["subreddit"] = \
-                serialised_dict["subreddit"].display_name
-            serialised_dict["author"] = \
-                serialised_dict["author"].name
 
             sock.connect(("localhost", 37998))
-            serialised_dict["dispatch_time"] = dispatch_time
-            sock.sendall(bytes(json.dumps(serialised_dict) + "\n", "utf-8"))
+            json_string = ModelSerialiser(submission) \
+                .to_json(addon=dict(dispatch_time=dispatch_time))
+            sock.sendall(bytes(json.dumps(json_string) + "\n", "utf-8"))
             print(f"SENT SUBMISSION, status={str(sock.recv(10), 'utf-8')}")
 
     async def _dispatch_comment(self, comment: Comment) -> None:
@@ -81,14 +76,8 @@ class KubotDispatcher:
         """
         dispatch_time = datetime.utcnow().timestamp()
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-            serialised_dict = comment.__dict__
-            serialised_dict.pop("_reddit")
-            serialised_dict["subreddit"] = \
-                serialised_dict["subreddit"].display_name
-            serialised_dict["author"] = \
-                serialised_dict["author"].name
-
             sock.connect(("localhost", 37999))
-            serialised_dict["dispatch_time"] = dispatch_time
-            sock.sendall(bytes(json.dumps(serialised_dict) + "\n", "utf-8"))
+            json_string = ModelSerialiser(comment) \
+                .to_json(addon=dict(dispatch_time=dispatch_time))
+            sock.sendall(bytes(json.dumps(json_string) + "\n", "utf-8"))
             print(f"SENT COMMENT, status={str(sock.recv(10), 'utf-8')}")

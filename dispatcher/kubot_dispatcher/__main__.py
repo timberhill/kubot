@@ -16,4 +16,4 @@ try:
 
     KubotDispatcher(config, api_config).start()
 except Exception as e:
-    print(f"Critical error in __main__.py: {e}")
+    print(f"Critical dispatcher error: {e}")

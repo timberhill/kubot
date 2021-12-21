@@ -8,8 +8,10 @@
 - `core-1`: ~~Dispatcher class reading comments from PRAW in a single thread~~
 - `core-2`: ~~Dispatcher class reading both submissions and comments~~
 - `core-3`: ~~Dispatcher using the config for the subreddit list~~
-- `core-4`: Create an example bot, dispatcher sends comments over tcp to an example bot that just logs out the comment if a word is found
-- `core-`: Logging setup
+- `core-4`: ~~Create an example bot, dispatcher sends comments over tcp to an example bot that just logs out the comment if a word is found~~
+- `core-5`: Dispatcher sends events to multiple bots
+- `core-`: Bots renamed to clients
+- `core-`: Logging implemented
 
 ### Maintenance
 

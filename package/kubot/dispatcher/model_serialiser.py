@@ -3,6 +3,8 @@ import json
 from asyncpraw.models.reddit.submission import Submission
 from asyncpraw.models.reddit.comment import Comment
 
+from ..exceptions import KubotModelSerialiserError
+
 
 class ModelSerialiser:
     """Routines to serialise AsyncPRAW models
@@ -17,6 +19,9 @@ class ModelSerialiser:
             return self._submission_to_dict(self.obj, addon)
         if isinstance(self.obj, Comment):
             return self._comment_to_dict(self.obj, addon)
+        raise KubotModelSerialiserError(
+            "There is no serialisation function for object type " +
+            f"'{type(self.obj)}'")
 
     def to_json(self, addon=dict()):
         """Return a json representation of the object as a string

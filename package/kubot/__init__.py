@@ -1,11 +1,13 @@
 from .exceptions import (
     KubotDispatcherConfigError,
-    KubotDispatcherError
+    KubotDispatcherError,
+    KubotModelSerialiserError
 )
 
 __all__ = [
     "KubotDispatcherError",
-    "KubotDispatcherConfigError"
+    "KubotDispatcherConfigError",
+    "KubotModelSerialiserError"
 ]
 
 __version__ = "0.1.2"

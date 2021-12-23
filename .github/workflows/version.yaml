@@ -31,7 +31,7 @@ jobs:
       - name: kubot version
         id: kubot_version
         run: |
-          echo "Kubot package version: "$(grep version package/pyproject.toml | grep -o '[0-9.]*')"
+          echo "Kubot package version: $(grep version package/pyproject.toml | grep -o '[0-9.]*')"
           echo ::set-output name=value::"$(grep version package/pyproject.toml | grep -o '[0-9.]*')"
 
       - name: git tag

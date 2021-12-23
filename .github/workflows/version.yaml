@@ -23,11 +23,6 @@ jobs:
         run: |
           git --version
 
-      - name: pwd
-        run: |
-          pwd
-          ls -lh
-
       - name: kubot version
         id: kubot_version
         run: |
@@ -38,6 +33,9 @@ jobs:
         run: |
           git config user.name "timberbot"
           git config user.email "<>"
-          git tag v${{ steps.kubot_version.outputs.value }}
-          GIT_PAGER=cat git log v${{ steps.kubot_version.outputs.value }} -n 1
+          git tag v${{ steps.kubot_version.outputs.value }} --force
           git push origin v${{ steps.kubot_version.outputs.value }}
+
+      - name: tag info
+        run: |
+          GIT_PAGER=cat git log v${{ steps.kubot_version.outputs.value }} -n 1

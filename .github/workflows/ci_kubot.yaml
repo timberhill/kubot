@@ -12,7 +12,7 @@ on:
 
 jobs:
   test:
-    name: CI with python-${{ matrix.python-version }} ${{ matrix.suffix }}
+    name: python-${{ matrix.python-version }} ${{ matrix.suffix }}
     runs-on: self-hosted
     strategy:
       matrix:

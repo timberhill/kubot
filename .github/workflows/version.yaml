@@ -30,12 +30,14 @@ jobs:
 
       - name: kubot version
         id: kubot_version
-        run: echo ::set-output name=value::"$(grep version package/pyproject.toml | grep -o '[0-9.]*')"
-
-      - name: git version
         run: |
-          git --version
+          echo "Kubot package version: "$(grep version package/pyproject.toml | grep -o '[0-9.]*')"
+          echo ::set-output name=value::"$(grep version package/pyproject.toml | grep -o '[0-9.]*')"
+
+      - name: git tag
+        run: |
           git config user.name "timberbot"
           git config user.email "<>"
           git tag v${{ steps.kubot_version.outputs.value }}
-          git show v${{ steps.kubot_version.outputs.value }}
+          GIT_PAGER=cat git log v${{ steps.kubot_version.outputs.value }} -n 1
+          git push origin v${{ steps.kubot_version.outputs.value }}

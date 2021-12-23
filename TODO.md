@@ -15,7 +15,7 @@
 
 ### Maintenance
 
-- `maint-1`: github action that adds a version tag on PR merge
+- `maint-1`: ~~github action that adds a version tag on PR merge~~
 
 ## Stage 2 - package up for kubernetes
 

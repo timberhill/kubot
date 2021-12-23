@@ -1,5 +1,5 @@
 ---
-name: ci_kubot
+name: Kubot CI
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ on:
 
 jobs:
   test:
-    name: python-${{ matrix.python-version }} ${{ matrix.suffix }}
+    name: CI with python-${{ matrix.python-version }} ${{ matrix.suffix }}
     runs-on: self-hosted
     strategy:
       matrix:

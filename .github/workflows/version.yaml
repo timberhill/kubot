@@ -1,0 +1,35 @@
+---
+name: version
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  tag:
+    name: Repo tag
+    runs-on: self-hosted
+    strategy:
+      fail-fast: false
+    defaults:
+      run:
+        shell: bash
+    steps:
+
+    - name: git version
+      run: |
+        git --version
+
+    - name: kubot version
+      id: kubot_version
+      run: echo ::set-output name=value::"$(grep version package/pyproject.toml | grep -o '[0-9.]*')"
+
+    - name: git version
+      run: |
+        git --version
+        git config user.name "timberbot"
+        git config user.email "<>"
+        git tag v${{ steps.kubot_version.outputs.value }}
+        git show v${{ steps.kubot_version.outputs.value }}

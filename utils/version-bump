@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+project=$1
+bump_kind=$2
+
+echo "Bumping $project's $bump_kind version"
+
+if [ "$project" == "package" ] || [ "$project" == "kubot" ]; then
+    toml=package/pyproject.toml
+    init=package/kubot/__init__.py
+elif [ "$project" == "dispatcher" ]; then
+    toml=dispatcher/pyproject.toml
+    init=dispatcher/kubot_dispatcher/__init__.py
+elif [ "$project" == "example-bot" ]; then
+    toml=clients/example-bot/pyproject.toml
+    init=clients/example-bot/example_bot/__init__.py
+else
+    echo "Project $project not found"
+    exit 1
+fi
+
+version=$(grep "version" $toml | grep -o "[0-9.]*")
+echo "Old version: $version"
+
+# get the version and increment
+IFS=. read -r major minor patch <<< "$version"
+
+if [ "$bump_kind" == "patch" ]; then
+    ((patch++))
+elif [ "$bump_kind" == "minor" ]; then
+    patch=0
+    ((minor++))
+elif [ "$bump_kind" == "major" ]; then
+    patch=0
+    minor=0
+    ((major++))
+fi
+echo "New version: $major.$minor.$patch"
+
+sed -i "s/^version\s*=\s*\(.*\)/version = \"$major.$minor.$patch\"/g" $toml
+sed -i "s/^__version__\s*=\s*\(.*\)/__version__ = \"$major.$minor.$patch\"/g" $init
